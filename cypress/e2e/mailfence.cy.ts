@@ -1,5 +1,5 @@
-describe('template spec', () => {
-  it('passes', () => {
-    cy.visit('https://example.cypress.io')
+describe('Mailfence spec', () => {
+  it('File: attach > move > delete', () => {
+    cy.visit('/');
   })
 })
