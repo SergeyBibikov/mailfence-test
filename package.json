@@ -1,0 +1,24 @@
+{
+    "name": "mailfence-test",
+    "version": "1.0.0",
+    "description": "A repo to practice Cypress framework",
+    "main": "index.js",
+    "scripts": {
+        "test": "npx cypress run"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SergeyBibikov/mailfence-test.git"
+    },
+    "author": "Sergey Bibikov",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/SergeyBibikov/mailfence-test/issues"
+    },
+    "homepage": "https://github.com/SergeyBibikov/mailfence-test#readme",
+    "devDependencies": {
+        "@4tw/cypress-drag-drop": "^2.2.3",
+        "cypress": "^12.5.0",
+        "typescript": "^4.9.5"
+    }
+}
