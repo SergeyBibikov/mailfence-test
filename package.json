@@ -4,7 +4,7 @@
     "description": "A repo to practice Cypress framework",
     "main": "index.js",
     "scripts": {
-        "test": "npx cypress run"
+        "test": ". ./vars.sh && npx cypress run --headed"
     },
     "repository": {
         "type": "git",
@@ -18,6 +18,8 @@
     "homepage": "https://github.com/SergeyBibikov/mailfence-test#readme",
     "devDependencies": {
         "@4tw/cypress-drag-drop": "^2.2.3",
+        "cypress-real-events": "^1.7.6",
+        "@types/node": "^18.14.0",
         "cypress": "^12.5.0",
         "typescript": "^4.9.5"
     }

@@ -5,6 +5,7 @@ export default defineConfig({
   e2e: {
 
     baseUrl: "https://mailfence.com",
+    pageLoadTimeout: 30000,
     setupNodeEvents(on, config) {
 
       on('task', {
