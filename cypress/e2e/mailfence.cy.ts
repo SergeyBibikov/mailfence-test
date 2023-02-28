@@ -78,10 +78,3 @@ describe('Mailfence spec', () => {
     cy.exec(command)
   })
 })
-
-describe.skip('debug', () => {
-  it('debug', function () {
-    cy.visit('/');
-    cy.waitForMail('body')
-  })
-})
