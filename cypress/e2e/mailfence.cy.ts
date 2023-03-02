@@ -1,24 +1,12 @@
+import { Documents } from "../pageObjects/documents"
+import { MessagesPage } from "../pageObjects/messages"
+import { NewMessagePage } from "../pageObjects/newMessage"
 
-//Login page
-const SIGN_IN = '#signin'
-const USER_ID = '#UserID'
-const PASSWORD = '#Password'
-const ENTER = 'input[value="Enter"]'
-
-//Send email page
-const MESSAGES = '#nav-mail'
-const NEW_MAIL = '#mailNewBtn'
-const MAIL_TO = '#mailTo'
-const SUBJECT = '#mailSubject'
-const ATTACHMENT_INPUT = 'input[type="file"]'
-const ATTACHMENT_BTN = 'a:contains("Attachment")'
-const SEND = '#mailSend'
-const REFRESH = 'div[title="Refresh"]'
-const MAIL_LIST = '#mailList'
 
 /*
 TODO:
-  - Вынести действия пользователя в PO
+  - Отрефакторить PO
+  - добавить комментарии к функциям PO
   - удалить письмо после проверки
 */
 const testFileName = 'dummy.txt'
@@ -28,42 +16,40 @@ describe('Mailfence spec', () => {
     cy.writeFile(testFileName, "My only purpose is to be attached to the test e-mail. OMG :(")
   })
 
-  it('File: attach > move > delete', function () {
-    const testSubject = `The file you requested ${Date.now()}`
+  beforeEach(() => {
     cy.fixture('mailText.txt').as("mailText")
+  })
+
+  it('File: attach > move > delete', function () {
+
+    const testSubject = `The file you requested ${Date.now()}`
 
     cy.visit('/');
+    cy.login();
 
-    cy.get(SIGN_IN).click();
-    cy.get(USER_ID).type(Cypress.env("USERNAME"));
-    cy.get(PASSWORD).type(Cypress.env("PASSWORD"), { log: false })
-    cy.get(ENTER).click();
+    const mp = new MessagesPage();
+    mp.createNewMessage();
 
-    cy.get(MESSAGES).click();
-    cy.get(NEW_MAIL).click();
-    cy.get(MAIL_TO).type(Cypress.env("USERNAME") + "@mailfence.com").type('{enter}');
-    cy.get(SUBJECT).type(testSubject);
-    cy.window().then((w) => {
-      w.document.querySelector('.GCSDBRWBFGC').querySelector('iframe').contentDocument.body.innerHTML = this.mailText
-    })
-    cy.get(ATTACHMENT_BTN).click();
-    cy.get(ATTACHMENT_INPUT).selectFile(testFileName, { force: true });
+    const nmp = new NewMessagePage();
+    nmp
+      .setMailReciever(Cypress.env("USERNAME") + "@mailfence.com")
+      .setMailSubject(testSubject)
+      .setMailText(this.mailText)
+      .attachFile(testFileName);
+
+    //Asserting the file was attached
     cy.get('table').eq(1).find('tbody tr').last().should('contain.text', testFileName)
-    cy.get(SEND).click();
 
-    cy.waitForMail(testSubject);
-    cy.get(`[title="${testSubject}"]`).click()
+    nmp.sendMail();
 
-    cy.get(`a[title*="${testFileName}"]`).find('b').click({ force: true });
-    cy.get('span:contains("Save in Documents")').click({ force: true })
-    cy.get('div.treeItemLabel:contains("My documents")').click()
+    mp
+      .waitForNewMailWithSubject(testSubject)
+      .openMailWithSubjectPreview(testSubject)
+      .saveOpenedMailAttachmentToDocuments(testFileName);
 
-    cy.intercept("POST", 'https://mailfence.com/gwt').as('save');
-    cy.get('div.btnCtn:contains("Save")').click();
-    cy.get('div.btnCtn:contains("Save")').click();
-    cy.wait('@save')
+    new Documents().open();
 
-    cy.get('#nav-docs').click();
+    //Asserting the testfile is in the documents
     cy.get(`[title="${testFileName}"]`).should('be.visible')
 
   })
