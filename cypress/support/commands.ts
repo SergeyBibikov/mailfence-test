@@ -69,3 +69,15 @@ Cypress.Commands.add('waitForMail', (mailSubject: string, timeout = 3000) => {
         .then(d => gl(d))
         .then(r => expect(r).to.be.true)
 })
+
+Cypress.Commands.add('login', () => {
+    const SIGN_IN = '#signin'
+    const USER_ID = '#UserID'
+    const PASSWORD = '#Password'
+    const ENTER = 'input[value="Enter"]'
+
+    cy.get(SIGN_IN).click();
+    cy.get(USER_ID).type(Cypress.env("USERNAME"));
+    cy.get(PASSWORD).type(Cypress.env("PASSWORD"), { log: false })
+    cy.get(ENTER).click();
+})
