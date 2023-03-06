@@ -23,14 +23,15 @@ describe('Mailfence spec', () => {
 
     const testSubject = `The file you requested ${Date.now()}`
 
+    const messagesPage = new MessagesPage();
+    const newMessagePage = new NewMessagePage();
+
     cy.visit('/');
     cy.login();
 
-    const mp = new MessagesPage();
-    mp.createNewMail();
+    messagesPage.createNewMail();
 
-    const nmp = new NewMessagePage();
-    nmp
+    newMessagePage
       .setMailReciever(Cypress.env("USERNAME") + "@mailfence.com")
       .setMailSubject(testSubject)
       .setMailText(this.mailText)
@@ -39,9 +40,9 @@ describe('Mailfence spec', () => {
     //Asserting the file was attached
     cy.get('table').eq(1).find('tbody tr').last().should('contain.text', testFileName)
 
-    nmp.sendMail();
+    newMessagePage.sendMail();
 
-    mp
+    messagesPage
       .waitForNewMailWithSubject(testSubject)
       .openMailWithSubjectPreview(testSubject)
       .saveOpenedMailAttachmentToDocuments(testFileName);
@@ -52,7 +53,7 @@ describe('Mailfence spec', () => {
     cy.get(`[title="${testFileName}"]`).should('be.visible')
 
     //Deleting the test email
-    mp.open().deleteMailWithSubject(testSubject);
+    messagesPage.open().deleteMailWithSubject(testSubject);
 
   })
 
