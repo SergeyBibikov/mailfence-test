@@ -1,12 +1,8 @@
-import { Documents } from "../pageObjects/documents"
+import { DocumentsPage } from "../pageObjects/documents"
 import { MessagesPage } from "../pageObjects/messages"
 import { NewMessagePage } from "../pageObjects/newMessage"
 
 
-/*
-TODO:
-  - добавить комментарии к функциям PO
-*/
 const testFileName = 'dummy.txt'
 
 describe('Mailfence spec', () => {
@@ -44,11 +40,11 @@ describe('Mailfence spec', () => {
     messagesPage
       .waitForNewMailWithSubject(testSubject)
       .openMailWithSubjectPreview(testSubject)
-      .saveOpenedMailAttachmentToDocuments(testFileName);
+      .saveOpenedMailAttachmentToDocumentsPage(testFileName);
 
-    new Documents().open();
+    new DocumentsPage().open();
 
-    //Asserting the testfile is in the documents
+    //Asserting the testfile is in the DocumentsPage
     cy.get(`[title="${testFileName}"]`).should('be.visible')
 
     //Deleting the test email

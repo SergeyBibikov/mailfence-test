@@ -1,8 +1,13 @@
 export class MessagesPage {
+    /** Opens the form of new mail creation */
     createNewMail() {
         cy.get('#mailNewBtn').click();
     }
 
+    /**
+     * Deletes the mail with the specified subject from inbox
+     * @param mailSubject 
+     */
     deleteMailWithSubject(mailSubject: string) {
         const mail = `[title="${mailSubject}"]`
 
@@ -28,10 +33,15 @@ export class MessagesPage {
         return this
     }
 
-    saveOpenedMailAttachmentToDocuments(attachmentFileName: string) {
+    /**
+     * Saves the file specified from the mail whose preview is 
+     * currently open.
+     * @param attachmentFileName 
+     */
+    saveOpenedMailAttachmentToDocumentsPage(attachmentFileName: string) {
         cy.get(`a[title*="${attachmentFileName}"]`).find('b').click({ force: true });
-        cy.get('span:contains("Save in Documents")').click({ force: true })
-        cy.get('div.treeItemLabel:contains("My documents")').click()
+        cy.get('span:contains("Save in DocumentsPage")').click({ force: true })
+        cy.get('div.treeItemLabel:contains("My DocumentsPage")').click()
 
         cy.intercept("POST", 'https://mailfence.com/gwt').as('save');
 

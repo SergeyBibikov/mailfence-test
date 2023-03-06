@@ -4,6 +4,7 @@ export class NewMessagePage {
 
         return this
     }
+
     setMailSubject(subject: string) {
         cy.get('#mailSubject').type(subject);
 
