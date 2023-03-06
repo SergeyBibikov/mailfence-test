@@ -5,7 +5,6 @@ import { NewMessagePage } from "../pageObjects/newMessage"
 
 /*
 TODO:
-  - Отрефакторить PO
   - добавить комментарии к функциям PO
   - удалить письмо после проверки
 */
@@ -28,7 +27,7 @@ describe('Mailfence spec', () => {
     cy.login();
 
     const mp = new MessagesPage();
-    mp.createNewMessage();
+    mp.createNewMail();
 
     const nmp = new NewMessagePage();
     nmp

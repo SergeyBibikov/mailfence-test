@@ -1,6 +1,10 @@
 export class MessagesPage {
-    createNewMessage() {
+    createNewMail() {
         cy.get('#mailNewBtn').click();
+    }
+
+    deleteMailWithSUbject() {
+
     }
 
     openMailWithSubjectPreview(mailSubject: string) {
