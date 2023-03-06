@@ -51,6 +51,9 @@ describe('Mailfence spec', () => {
     //Asserting the testfile is in the documents
     cy.get(`[title="${testFileName}"]`).should('be.visible')
 
+    //Deleting the test email
+    mp.open().deleteMailWithSubject(testSubject);
+
   })
 
   after(() => {

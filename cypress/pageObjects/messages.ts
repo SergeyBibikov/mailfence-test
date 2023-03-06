@@ -3,8 +3,24 @@ export class MessagesPage {
         cy.get('#mailNewBtn').click();
     }
 
-    deleteMailWithSUbject() {
+    deleteMailWithSubject(mailSubject: string) {
+        const mail = `[title="${mailSubject}"]`
 
+        cy.get(mail).should('be.visible')
+
+        cy.document().then((d) => {
+            if (d.querySelectorAll('tr.selectedRow').length === 0) {
+                cy.get(mail).parents('td').prev().click()
+            }
+        })
+
+        cy.get('[title="To Trash"]').click();
+    }
+
+    open() {
+        cy.get('#nav-mail').click()
+
+        return this
     }
 
     openMailWithSubjectPreview(mailSubject: string) {
