@@ -12,8 +12,8 @@ export class NewMessagePage {
 
     setMailText(mailText: string) {
         cy.window().then((w) => {
-            //TODO: заменить селектор на более надёжный
-            w.document.querySelector('.GCSDBRWBFGC').querySelector('iframe').contentDocument.body.innerHTML = mailText
+            //@ts-ignore
+            w.document.querySelector('iframe[class*="editable"]').contentDocument.body.innerHTML = mailText
         })
 
         return this
