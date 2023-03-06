@@ -37,48 +37,10 @@
 // }
 
 Cypress.on("uncaught:exception", (_, _1) => false)
-// Cypress.Commands.add('waitForMail', (mailSubject: string, timeout = 3000) => {
-// const refr = (time: number, found: boolean) => {
-//     if (!found) {
-//         cy.wait(time)
-//         cy.get('div[title="Refresh"]').click()
-//         cy.get('table').eq(3).find('tbody').eq(1).should('be.visible')
-//     }
-// }
-// const gl = (d: Document) => d.querySelectorAll('table')[3].querySelectorAll('tbody')[1].innerHTML.includes(mailSubject)
-
-// const t = timeout - 300
-// const second = Math.round(t * 0.3)
-// const third = t - second
-
-// cy.get('table').eq(3).find('tbody').eq(1).should('be.visible')
-// cy.log(`Waiting for the mail with subject "${mailSubject}"`)
-
-// cy.document()
-//     .then(d => gl(d))
-//     .then(r => refr(300, r))
-
-// cy.document()
-//     .then(d => gl(d))
-//     .then(r => refr(second, r))
-
-// cy.document()
-//     .then(d => gl(d))
-//     .then(r => refr(third, r))
-
-// cy.document()
-//     .then(d => gl(d))
-//     .then(r => expect(r).to.be.true)
-// })
 
 Cypress.Commands.add('login', () => {
-    const SIGN_IN = '#signin'
-    const USER_ID = '#UserID'
-    const PASSWORD = '#Password'
-    const ENTER = 'input[value="Enter"]'
-
-    cy.get(SIGN_IN).click();
-    cy.get(USER_ID).type(Cypress.env("USERNAME"));
-    cy.get(PASSWORD).type(Cypress.env("PASSWORD"), { log: false })
-    cy.get(ENTER).click();
+    cy.get('#signin').click();
+    cy.get('#UserID').type(Cypress.env("USERNAME"));
+    cy.get('#Password').type(Cypress.env("PASSWORD"), { log: false })
+    cy.get('input[value="Enter"]').click();
 })

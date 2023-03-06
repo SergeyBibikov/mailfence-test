@@ -1,9 +1,8 @@
 export class MessagesPage {
     createNewMessage() {
-        const NEW_MAIL = '#mailNewBtn'
-
-        cy.get(NEW_MAIL).click();
+        cy.get('#mailNewBtn').click();
     }
+
     openMailWithSubjectPreview(mailSubject: string) {
         cy.get(`[title="${mailSubject}"]`).click();
         return this
@@ -15,11 +14,21 @@ export class MessagesPage {
         cy.get('div.treeItemLabel:contains("My documents")').click()
 
         cy.intercept("POST", 'https://mailfence.com/gwt').as('save');
-        cy.get('div.btnCtn:contains("Save")').click();
-        cy.get('div.btnCtn:contains("Save")').click();
+
+        const saveBtn = 'div.btnCtn:contains("Save")';
+        cy.get(saveBtn).click();
+        //Somehow one click is not enough
+        cy.get(saveBtn).click();
+
         cy.wait('@save')
     }
 
+    /**
+     * Makes maximum 3 iterations waiting for the mail with the specified subject.
+     * The wait time increases with every iteration.
+     * @param mailSubject 
+     * @param timeout total timeout in ms. Default is 3000
+     */
     waitForNewMailWithSubject(mailSubject: string, timeout = 3000) {
         const refr = (time: number, found: boolean) => {
             if (!found) {
