@@ -6,7 +6,6 @@ import { NewMessagePage } from "../pageObjects/newMessage"
 /*
 TODO:
   - добавить комментарии к функциям PO
-  - удалить письмо после проверки
 */
 const testFileName = 'dummy.txt'
 

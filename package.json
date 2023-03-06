@@ -4,7 +4,7 @@
     "description": "A repo to practice Cypress framework",
     "main": "index.js",
     "scripts": {
-        "test": ". ./vars.sh && npx cypress run --headed"
+        "test": "npx cypress run"
     },
     "repository": {
         "type": "git",
