@@ -5,6 +5,9 @@ import { NewMessagePage } from "../pageObjects/newMessage"
 
 const testFileName = 'dummy.txt'
 
+//TODO: сделать PO future-proof
+//TODO: переделать функцию ожидания письма на использование each и return false
+
 describe('Mailfence spec', () => {
   before(() => {
     cy.writeFile(testFileName, "My only purpose is to be attached to the test e-mail. OMG :(")
